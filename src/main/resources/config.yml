@@ -88,16 +88,30 @@ custom-servers:
     port: 3306
 
 # Enable virtual hosts to be specified to skip the server list
-# Allows people to connect using addresses like
-#   hypixel.net._p25565.example.com
-#   hypixel.net.example.com
-#   hypixel.net._o.example.com    - For offline mode
+# The configuration format is as follows:
+# <Connection Address>:
+#   address: <Destination Address>
+#   port: <Destination Port>
+#   bedrock: <true | false>
+#
+# Example:
+# eu.example.com:
+#   address: example.com
+#   port: 19134
+#   bedrock: true
+#
+# This configuration forwards connections to eu.example.com to example.com:19134.
 vhost:
   # Should this be enabled
   enabled: false
 
   # The domains pointing to the server
   domains:
-    - example.com
-    - eu.example.com
-    - us.example.com
+    eu.example.com:
+      address: example.com
+      port: 19134
+      bedrock: true
+    us.example.com:
+      address: example.com
+      port: 19135
+      bedrock: true
