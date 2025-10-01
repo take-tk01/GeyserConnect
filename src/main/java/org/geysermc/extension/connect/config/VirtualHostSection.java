@@ -27,9 +27,9 @@ package org.geysermc.extension.connect.config;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.List;
+import java.util.Map;
 
 public record VirtualHostSection(
     boolean enabled,
-    @JsonProperty("domains") List<String> domains) {
+    @JsonProperty("domains") Map<String, VHostDomainEntry> domains) {
 }
