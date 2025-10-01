@@ -81,45 +81,18 @@ public class PacketHandler extends UpstreamPacketHandler {
         // Handle the virtual host if specified
         VirtualHostSection vhost = geyserConnect.config().vhost();
         if (vhost.enabled()) {
-            String domain = session.getClientData().getServerAddress();
-
-            // Build the regex matcher for the vhosts
-            Pattern regex = Pattern.compile("\\.?(" + vhost.domains().stream().map(Pattern::quote).collect(Collectors.joining("|")) + ")(:[0-9]+)?$");
-
-            if (regex.matcher(domain).find()) {
-                String target = domain.replaceAll(regex.pattern(), "").strip();
-                if (!target.isEmpty()) {
-                    String address = "";
-                    int port = 25565;
-                    boolean online = true;
-
-                    // Parse the address used
-                    String[] domainParts = target.split("\\._");
-                    for (int i = 0; i < domainParts.length; i++) {
-                        String part = domainParts[i];
-                        if (i == 0) {
-                            address = part;
-                        } else if (part.startsWith("p")) {
-                            port = Integer.parseInt(part.substring(1));
-                        } else if (part.startsWith("o")) {
-                            online = false;
-                        }
-                    }
-
-                    // They didn't specify an address so disconnect them
-                    if (address.startsWith("_")) {
-                        session.disconnect("disconnectionScreen.invalidIP");
-                        return PacketSignal.HANDLED;
-                    }
-
-                    // Log the virtual host usage
-                    geyserConnect.logger().info(Utils.displayName(session) + " is using virtualhost: " + address + ":" + port + (!online ? " (offline)" : ""));
-
-                    // Send the player to the wanted server
-                    Utils.sendToServer(session, originalPacketHandler, new Server(address, port, online, false, null, null, null));
-
-                    return PacketSignal.HANDLED;
-                }
+            String hostname = session.getClientData().getServerAddress();
+            String[] hostparts = hostname.split(":");
+            String host = hostparts[0];
+            VHostDomainEntry entry = vhost.domains().get(host);
+            if (entry != null) {
+                String address = entry.getAddress();
+                int port = entry.getPort();
+                boolean online = true;
+                boolean bedrock = entry.isBedrock();
+                geyserConnect.logger().info(Utils.displayName(session) + " is using virtualhost: " + address + ":" + port + (!bedrock ? " (java)" : " (bedrock)"));
+                Utils.sendToServer(session, originalPacketHandler, new Server(address, port, online, bedrock, null, null, null));
+                return PacketSignal.HANDLED;
             }
         }
 
