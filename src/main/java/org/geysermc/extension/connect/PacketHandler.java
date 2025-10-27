@@ -90,7 +90,7 @@ public class PacketHandler extends UpstreamPacketHandler {
                 int port = entry.getPort();
                 boolean online = true;
                 boolean bedrock = entry.isBedrock();
-                geyserConnect.logger().info(Utils.displayName(session) + " is using virtualhost: " + address + ":" + port + (!bedrock ? " (java)" : " (bedrock)"));
+                geyserConnect.logger().info(Utils.displayName(session) + " is using virtualhost " + host + " , and connect to " + address + ":" + port + (!bedrock ? " (java)" : " (bedrock)"));
                 Utils.sendToServer(session, originalPacketHandler, new Server(address, port, online, bedrock, null, null, null));
                 return PacketSignal.HANDLED;
             }
