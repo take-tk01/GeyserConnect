@@ -32,6 +32,18 @@ dependencies {
         exclude group: 'io.netty.incubator'
     }
 
+    // Netty types are excluded from the geyser bundle above to avoid runtime
+    // dependency conflicts, but the compiler still needs the Netty API on the
+    // classpath. Add compileOnly references so compilation succeeds without
+    // forcing them into the runtime jar.
+    compileOnly 'io.netty:netty-common:4.1.99.Final'
+    implementation 'org.yaml:snakeyaml:1.17'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.15.2'
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.15.2'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.15.2'
+    implementation 'com.google.code.gson:gson:2.11.0'
+
     implementation libs.sqlite
     implementation libs.mysql
 }

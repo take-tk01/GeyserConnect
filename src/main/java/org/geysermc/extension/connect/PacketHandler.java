@@ -34,6 +34,7 @@ import org.cloudburstmc.protocol.bedrock.packet.SetLocalPlayerAsInitializedPacke
 import org.cloudburstmc.protocol.bedrock.packet.UpdateAttributesPacket;
 import org.cloudburstmc.protocol.common.PacketSignal;
 import org.geysermc.extension.connect.config.VirtualHostSection;
+import org.geysermc.extension.connect.config.VHostDomainEntry;
 import org.geysermc.extension.connect.ui.UIHandler;
 import org.geysermc.extension.connect.utils.Server;
 import org.geysermc.extension.connect.utils.ServerManager;
@@ -66,7 +67,6 @@ public class PacketHandler extends UpstreamPacketHandler {
         DimensionUtils.setBedrockDimension(session, 2);
     }
 
-    @Override
     public void onDisconnect(String reason) {
         // The user has disconnected without having connected to an actual server. If they have connected to
         // a server (transfer packet or geyser proxy), then the original packet handler has been restored.

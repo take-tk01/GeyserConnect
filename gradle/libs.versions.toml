@@ -1,5 +1,5 @@
 [versions]
-geyser = "2.7.0-SNAPSHOT"
+geyser = "2.9.0-SNAPSHOT"
 sqlite = "3.49.1.0"
 mysql = "9.2.0"
 

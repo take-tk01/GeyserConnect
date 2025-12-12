@@ -24,7 +24,6 @@
  */
 
 package org.geysermc.extension.connect.storage;
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.geysermc.extension.connect.GeyserConnect;
 import org.geysermc.extension.connect.utils.Server;
